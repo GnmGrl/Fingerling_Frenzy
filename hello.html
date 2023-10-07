@@ -1,6 +1,7 @@
 <head>
 </head>
 <body>
+
 <h1> Fingerling Frenzy</h1>
 <p id="demo">Get location</p>
 <br>
@@ -21,7 +22,7 @@
 
 
 
-<img id="scrMap" width="220" height="277" src="./scratch3.png">
+<img id="scrMap" width="400" height="400" src="./scratch3.png">
 <br>
 
  <br>
@@ -58,17 +59,39 @@
  <button onclick="getPlayer2()" id="player2btn">Click me to enter fish 2</button>
  </span>
  <br>
+ 
  <img id="player1pic" width="220" height="277" src="./redlionfish.png">
  <span class="tab">
  <img id="player2pic" width="220" height="277" src="./barracuda.png">
  </span>
  <br>
+ <p> <b>Player 1 stats</b></p>
+ <p id="plasticP1">P1 plastic </p>
+ <p id="sizeP1">P1 size</p>
+ <p id="predP1">P1 pred/prey</p>
+ <p id="litterP1">P1 litter</p>
+ <p> <b>Player 2 stats</b></p>
+ <p id="plasticP2">P1 plastic </p>
+ <p id="sizeP2">P2 size</p>
+ <p id="predP2">P2 pred/prey</p>
+ <p id="litterP2">P2 litter</p>
 
 <style>
 
 .tab {
 	display:inline-block;
 	margin-left: 40px;
+}
+/* Ref on background image: w3schools.com/html/triyitasp?=filename=tryhtml_images_background7
+*/
+body {
+	background-image: url('./simpleBG.png');
+	background-repeat: no;
+	background-attachment: fixed;
+	background-size:cover;
+}
+p {
+	font-size: 28px;
 }
 </style>
 
@@ -166,9 +189,15 @@
    //The first element is plastic resistance. The second is size. The third is pred/prey, and the fourth is 
    //litter size 1 to 10. All the rest are 1-10
    //0=predator, 1=prey
-   var tunaStats=[5,5,0,5];
-   var troutStats=[5,5,0,5];
-   var grouperStats=[5,5,0,5];
+   var redlionfishStats=[5,5,0,5];
+   var barracudaStats=[5,5,0,5];
+   var yellowfintunaStats=[5,5,0,5];
+   
+   //Create stats for the players too
+   var player1Stats;
+   var player2Stats;
+   player1Stats=redlionfishStats;
+   player2Stats=redlionfishStats;
    
 
 //Here's the map and random location
@@ -211,19 +240,29 @@ function getPlayer1() {
 	{
 		message="redlionfish";
 		document.getElementById("player1pic").src="./redlionfish.png";
+		player1Stats=redlionfishStats
+		
+		
+		
 	}
 	if(document.getElementById("barracuda").checked==true) 
 	{
 		message="barracuda";
 		document.getElementById("player1pic").src="./barracuda.png";
+		player1Stats=barracudaStats;
+		
 	}
 	if(document.getElementById("yellowfintuna").checked==true) 
 	{
 		message="yellowfintuna";
 		document.getElementById("player1pic").src="./yellowfintuna.png";
+		player1Stats=yellowfintunaStats;
 	}
 	document.getElementById("demo").innerHTML=message;
-
+	document.getElementById("plasticP1").innerHTML=player1Stats[0];
+	document.getElementById("sizeP1").innerHTML=player1Stats[1];
+	document.getElementById("predP1").innerHTML=player1Stats[2];
+	document.getElementById("litterP1").innerHTML=player1Stats[3];
 }
 
 
@@ -233,18 +272,25 @@ function getPlayer2(){
 	{
 		message="redlionfish";
 		document.getElementById("player2pic").src="./redlionfish.png";
+		player2Stats=redlionfishStats;
 	}
 	if(document.getElementById("barracuda2").checked==true) 
 	{
 		message="barracuda";
 		document.getElementById("player2pic").src="./barracuda.png";
+		player2Stats=barracudaStats;
 	}
 	if(document.getElementById("yellowfintuna2").checked==true) 
 	{
 		message="yellowfintuna";
 		document.getElementById("player2pic").src="./yellowfintuna.png";
+		player2Stats=yellowfintunaStats;
 	}
 	document.getElementById("demo").innerHTML=message;
+	document.getElementById("plasticP2").innerHTML=player2Stats[0];
+	document.getElementById("sizeP2").innerHTML=player2Stats[1];
+	document.getElementById("predP2").innerHTML=player2Stats[2];
+	document.getElementById("litterP2").innerHTML=player2Stats[3];
 
 
 }
@@ -255,7 +301,7 @@ function getMap(){
 	document.getElementById("demo").innerHTML="getMap function";
 	if(document.getElementById("map1").checked==true)
 	{
-		document.getElementById("scrMap").src="./scratchMap.png";
+		document.getElementById("scrMap").src="./Map1Gridded.png";
 		document.getElementById("demo").innerHTML="Map1";
 	}
 	if(document.getElementById("map2").checked==true)
