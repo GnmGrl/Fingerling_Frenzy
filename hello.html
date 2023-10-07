@@ -1,0 +1,49 @@
+<head>
+</head>
+<body>
+<h1> Hello</h1>
+<p>Get a random location</p>
+<br>
+<p id="demo" onclick="getLocation()">Get location</p>
+<br>
+
+<canvas id="myCanvas" width="300" height="300"></canvas>
+<img id="scrMap" width="220" height="277" src="./scratchMap.png">
+<br>
+ <button onclick="getLocation()">Click me</button> 
+<script>
+document.write('hello all')
+
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  const img = document.getElementById("scrMap");
+  ctx.drawImage(img, 10, 10);
+  const img2= document.getElementById("scrMap");
+  ctx.drawImage(img2, 50,50);
+  ctx.beginPath();
+	ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+	ctx.stroke();
+
+function getX() {
+
+	var x;
+	x=Math.floor(100*Math.random());
+	return x;
+}
+
+function getLocation() {
+   var x;
+   var y;
+   var message="Location= ";
+   x=Math.floor(100*Math.random());
+   y=Math.floor(100*Math.random());
+   message=message+x+"  , "+y;
+  document.getElementById("demo").innerHTML=message;
+  ctx.beginPath();
+  ctx.arc(x,y,x+20, y+20, 2*Math.PI);
+  ctx.stroke();
+}
+
+
+</script>
+</body>
