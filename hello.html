@@ -1,27 +1,178 @@
 <head>
 </head>
 <body>
-<h1> Hello</h1>
-<p>Get a random location</p>
-<br>
-<p id="demo" onclick="getLocation()">Get location</p>
+<h1> Fingerling Frenzy</h1>
+<p id="demo">Get location</p>
 <br>
 
-<canvas id="myCanvas" width="300" height="300"></canvas>
-<img id="scrMap" width="220" height="277" src="./scratchMap.png">
+<p>Select a Map and get a location</p>
+ <input type="radio" id="map1" name="mapChoice" value="map1">
+ <label for="map1">Map 1</label><br>
+ <input type="radio"  id="map2" name="mapChoice" value="map2">
+ <label for="map2">Map 2</label><br>
+ <input type="radio" id="map3" name="mapChoice" value="map3">
+ <label for="map3">Map 3</label><br>
+  <button onclick="getMap()" id="mapbtn">Click me to enter map</button>
+ <br>
+  <button onclick="getLocation()">Get Map Square</button> 
+<p id="locationText">Square</p>
+ <br>
+
+
+
+
+<img id="scrMap" width="220" height="277" src="./scratch3.png">
 <br>
- <button onclick="getLocation()">Click me</button> 
+
  <br>
- <button onclick="calcKids()">Calculate kids</button>
- <input type="number" min="10" max="20"  value="16" id="mykid" required>
+
+ <br>
  
+ 
+ 
+ 
+ <p>Fish player 1  <span class="tab"> Fish player 2</span></p>
+ <input type="radio" id="redlionfish" name="player1" value="redlionfish">
+ <label for="redlionfish">redlionfish</label>
+ <span class="tab">
+ <input type="radio" id="redlionfish2" name="player2" value="redlionfish">
+ <label for="redlionfish">redlionfish</label>
+ </span>
  <br>
+ <input type="radio"  id="barracuda" name="player1" value="barracuda">
+ <label for="barracuda">barracuda</label>
+ <span class="tab">
+ <input type="radio"  id="barracuda2" name="player2" value="barracuda">
+ <label for="barracuda">barracuda</label>
+ </span>
+ <br>
+ <input type="radio" id="yellowfintuna" name="player1" value="yellowfintuna">
+ <label for="yellowfintuna">yellowfintuna</label>
+ <span class="tab">
+ <input type="radio" id="yellowfintuna2" name="player2" value="yellowfintuna">
+ <label for="yellowfintuna">yellowfintuna</label>
+ </span>
+ <br>
+  <button onclick="getPlayer1()" id="player1btn">Click me to enter fish 1</button>
+ <span class="tab">
+ <button onclick="getPlayer2()" id="player2btn">Click me to enter fish 2</button>
+ </span>
+ <br>
+ <img id="player1pic" width="220" height="277" src="./redlionfish.png">
+ <span class="tab">
+ <img id="player2pic" width="220" height="277" src="./barracuda.png">
+ </span>
+ <br>
+
+<style>
+
+.tab {
+	display:inline-block;
+	margin-left: 40px;
+}
+</style>
 
 
 <script>
 
-document.write('hello all')
+   document.write('hello all')
+   //Here we set the map values. We have three maps. For each map, we have an 
+   //array for platic, nutrient, and coral percent. All on scales 1-10.
+   
+   /*
+   To find these values, we started with the map at 
+   https://oceancolor.gsfc.nasa.gov/gallery/feature/images/A2020318045000.Philippines.jpg
+   Then, we approximated a level based on the topography and color of the map.
+   */
+   
+   
+   var plasticMap1=[[9,6,3,1,1,1,1,1],
+      [9,6,3,1,1,1,1,1],
+      [9,3,3,3,4,4,1,1],
+      [9,6,7,9,6,3,3,1],
+      [7,3,7,6,9,3,3,1],
+      [7,3,3,3,7,6,3,1],
+      [9,4,1,3,6,7,3,1],
+      [9,4,4,1,3,6,6,6]];
+   var nutrientMap1=[[0,7,3,3,1,1,1,1],
+      [0,7,7,7,3,7,1,1],
+      [0,7,7,7,7,7,7,1],
+      [0,7,7,7,5,1,7,1],
+      [5,5,5,7,7,7,5,1],
+      [5,5,5,7,7,1,3,1],
+      [0,7,1,5,5,1,3,1],
+      [0,7,1,1,3,1,5,5]];
+   var coralMap1=[[1,8,4,4,4,4,4,4],
+     [1,8,8,4,4,4,4,4],
+     [1,8,8,8,8,8,4,4],
+     [1,1,8,1,8,8,8,4],
+     [8,8,8,8,1,8,8,4],
+     [8,8,8,8,8,8,8,4],
+     [1,8,4,8,8,8,8,4],
+     [1,8,4,4,8,8,8,8]];
+   var plasticMap2=[[1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2]];
+   var nutrientMap2=[[1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2]];
+   var coralMap2=[[1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2],
+     [3,3,3,3,3,3,3,3],
+     [1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2],
+     [3,3,3,3,3,3,3,3],
+     [1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2]];
+   var plasticMap3=[[1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2]];
+   var nutrientMap3=[[1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2],
+      [3,3,3,3,3,3,3,3],
+      [1,1,1,1,1,1,1,1],
+      [2,2,2,2,2,2,2,2]];
+   var coralMap3=[[1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2],
+     [3,3,3,3,3,3,3,3],
+     [1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2],
+     [3,3,3,3,3,3,3,3],
+     [1,1,1,1,1,1,1,1],
+     [2,2,2,2,2,2,2,2]];
+   
+   document.getElementById("demo").innerHTML=plasticMap1[0][0];
+   
+   
+   //Here we enter stats for each of 24 fish. For now, we have 3 fish
+   //The first element is plastic resistance. The second is size. The third is pred/prey, and the fourth is 
+   //litter size 1 to 10. All the rest are 1-10
+   //0=predator, 1=prey
+   var tunaStats=[5,5,0,5];
+   var troutStats=[5,5,0,5];
+   var grouperStats=[5,5,0,5];
+   
 
+//Here's the map and random location
+/*
   const canvas = document.getElementById("myCanvas");
   const ctx = canvas.getContext("2d");
   const img = document.getElementById("scrMap");
@@ -31,28 +182,92 @@ document.write('hello all')
   ctx.beginPath();
 	ctx.arc(95, 50, 40, 0, 2 * Math.PI);
 	ctx.stroke();
+*/
 
-function calcKids() {
- var message="Kids";
- var outvalue;
- outvalue=mykid.value+2;
- message=message+outvalue;
+//Player dropdowns
 
-	document.getElementById("demo").innerHTML=message;
-}
 
+//Get location prints  a random X and Y, both 1-8.
 function getLocation() {
    var x;
    var y;
    var message="Location= ";
-   x=Math.floor(canvas.width*Math.random());
-   y=Math.floor(canvas.height*Math.random());
+   x=Math.floor(8*Math.random()+1);
+   y=Math.floor(8*Math.random()+1);
    message=message+x+"  , "+y;
-  document.getElementById("demo").innerHTML=message;
+   document.getElementById("locationText").innerHTML=message;
+   //Change this later, to highlight the right box
    ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   ctx.arc(x,y,10, 0, 2*Math.PI);
   ctx.stroke();
+}
+
+
+//get player 1 stats function
+function getPlayer1() {
+	var message="hey";
+	if(document.getElementById("redlionfish").checked==true) 
+	{
+		message="redlionfish";
+		document.getElementById("player1pic").src="./redlionfish.png";
+	}
+	if(document.getElementById("barracuda").checked==true) 
+	{
+		message="barracuda";
+		document.getElementById("player1pic").src="./barracuda.png";
+	}
+	if(document.getElementById("yellowfintuna").checked==true) 
+	{
+		message="yellowfintuna";
+		document.getElementById("player1pic").src="./yellowfintuna.png";
+	}
+	document.getElementById("demo").innerHTML=message;
+
+}
+
+
+function getPlayer2(){
+		var message="hey";
+	if(document.getElementById("redlionfish2").checked==true) 
+	{
+		message="redlionfish";
+		document.getElementById("player2pic").src="./redlionfish.png";
+	}
+	if(document.getElementById("barracuda2").checked==true) 
+	{
+		message="barracuda";
+		document.getElementById("player2pic").src="./barracuda.png";
+	}
+	if(document.getElementById("yellowfintuna2").checked==true) 
+	{
+		message="yellowfintuna";
+		document.getElementById("player2pic").src="./yellowfintuna.png";
+	}
+	document.getElementById("demo").innerHTML=message;
+
+
+}
+
+
+
+function getMap(){
+	document.getElementById("demo").innerHTML="getMap function";
+	if(document.getElementById("map1").checked==true)
+	{
+		document.getElementById("scrMap").src="./scratchMap.png";
+		document.getElementById("demo").innerHTML="Map1";
+	}
+	if(document.getElementById("map2").checked==true)
+	{
+		document.getElementById("scrMap").src="./scratch2.png";
+		document.getElementById("demo").innerHTML="Map 2";
+	}
+	if(document.getElementById("map3").checked==true)
+	{
+		document.getElementById("scrMap").src="./scratch3.png";
+		document.getElementById("demo").innerHTML="Map 3";
+	}
 }
 
 
