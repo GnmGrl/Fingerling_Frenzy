@@ -1,10 +1,14 @@
 <head>
 </head>
 <body>
-
+<!-- Ref on sound effects https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play -->
 <h1> Fingerling Frenzy</h1>
 <p id="demo">Get location</p>
 <br>
+
+<audio id="myAudio">
+	<source src="mystery.mp3" type="audio/mpeg">
+	</audio>
 
 <p>Select a Map and get a location</p>
  <input type="radio" id="map1" name="mapChoice" value="map1">
@@ -99,8 +103,13 @@ p {
 <script>
 
    document.write('hello all')
+   //setup sound
+   var mySound=document.getElementById("myAudio");
+   
+   
    //Here we set the map values. We have three maps. For each map, we have an 
    //array for platic, nutrient, and coral percent. All on scales 1-10.
+   
    
    /*
    To find these values, we started with the map at 
@@ -235,6 +244,7 @@ function getLocation() {
 
 //get player 1 stats function
 function getPlayer1() {
+mySound.play();
 	var message="hey";
 	if(document.getElementById("redlionfish").checked==true) 
 	{
@@ -268,6 +278,7 @@ function getPlayer1() {
 
 function getPlayer2(){
 		var message="hey";
+		mySound.play();
 	if(document.getElementById("redlionfish2").checked==true) 
 	{
 		message="redlionfish";
