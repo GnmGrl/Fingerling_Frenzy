@@ -11,7 +11,15 @@
 <img id="scrMap" width="220" height="277" src="./scratchMap.png">
 <br>
  <button onclick="getLocation()">Click me</button> 
+ <br>
+ <button onclick="calcKids()">Calculate kids</button>
+ <input type="number" min="10" max="20"  value="16" id="mykid" required>
+ 
+ <br>
+
+
 <script>
+
 document.write('hello all')
 
   const canvas = document.getElementById("myCanvas");
@@ -24,23 +32,26 @@ document.write('hello all')
 	ctx.arc(95, 50, 40, 0, 2 * Math.PI);
 	ctx.stroke();
 
-function getX() {
+function calcKids() {
+ var message="Kids";
+ var outvalue;
+ outvalue=mykid.value+2;
+ message=message+outvalue;
 
-	var x;
-	x=Math.floor(100*Math.random());
-	return x;
+	document.getElementById("demo").innerHTML=message;
 }
 
 function getLocation() {
    var x;
    var y;
    var message="Location= ";
-   x=Math.floor(100*Math.random());
-   y=Math.floor(100*Math.random());
+   x=Math.floor(canvas.width*Math.random());
+   y=Math.floor(canvas.height*Math.random());
    message=message+x+"  , "+y;
   document.getElementById("demo").innerHTML=message;
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  ctx.arc(x,y,x+20, y+20, 2*Math.PI);
+  ctx.arc(x,y,10, 0, 2*Math.PI);
   ctx.stroke();
 }
 
