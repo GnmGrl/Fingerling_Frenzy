@@ -200,9 +200,9 @@ p {
    //The first element is plastic resistance. The second is size. The third is pred/prey, and the fourth is 
    //litter size 1 to 10. All the rest are 1-10
    //0=predator, 1=prey
-   var redlionfishStats=[5,5,0,5];
-   var barracudaStats=[5,5,0,5];
-   var yellowfintunaStats=[5,5,0,5];
+   var redlionfishStats=[6,2,0,2];
+   var barracudaStats=[3,4,0,2];
+   var yellowfintunaStats=[2,8,0,4];
    
    //Create stats for the players too
    var player1Stats;
@@ -278,7 +278,7 @@ function getPlayer1() {
 	document.getElementById("predP1").innerHTML=player1Stats[2];
 	document.getElementById("litterP1").innerHTML=player1Stats[3];
 	//Player1Score = Player1Score + scoringsystem(0, player1fishy);
-	document.getElementById("Player1score").innerHTML=Player1Score;
+	//document.getElementById("Player1score").innerHTML=Player1Score;
 }
 
 
@@ -316,6 +316,18 @@ function getPlayer2(){
 	Player1Score = Player1Score + scoringsystem(0, player1fishy, player2fishy);
 	Player2Score = Player2Score + scoringsystem(1, player2fishy, player1fishy);
 	document.getElementById("Player2score").innerHTML=Player2Score;
+	document.getElementById("Player1score").innerHTML=Player1Score;
+	
+	checkforwinner();
+}
+
+
+function checkforwinner(){
+	if(Player1Score >= 100){
+		document.getElementById("demo").innerHTML="Player 1 wins";
+	}else if(Player2Score >= 100){
+		document.getElementById("demo").innerHTML="Player 2 wins";
+	}
 }
 
 //Scoring System
@@ -331,7 +343,7 @@ function scoringsystem(player,fishy, oppfishy){
 		nutrientlevel = nutrientMap1[xlocation][ylocation];
 		corallevel = coralMap1[xlocation][ylocation];
 	}
-	document.getElementById("demo").innerHTML=corallevel;
+	//document.getElementById("demo").innerHTML=corallevel;
 	
 	var playerfishStats;
 	if(fishy == 1){
@@ -355,9 +367,9 @@ function scoringsystem(player,fishy, oppfishy){
 	//add whether player and opponent prey/pred
 	//predator/prey = prey losses 30%
 	//if player 2, player2 is a prey, and opponent is a predator
-	if(player == 1 && playerfishStats[2]==1 && oppfishStats[2]==0){
-		preypred = playerfishStats[3]*30/100.0
-	}
+	//if(player == 1 && playerfishStats[2]==1 && oppfishStats[2]==0){
+	//	preypred = playerfishStats[3]*30/100.0
+	//}
 	
 	var roundscore=0;
 	
