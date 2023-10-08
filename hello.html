@@ -23,19 +23,11 @@
 <p id="locationText">Square</p>
  <br>
 
-
-
-
 <img id="scrMap" width="400" height="400" src="./scratch3.png">
 <br>
 
- <br>
 
- <br>
- 
- 
- 
- 
+
  <p>Fish player 1  <span class="tab"> Fish player 2</span></p>
  <input type="radio" id="redlionfish" name="player1" value="redlionfish">
  <label for="redlionfish">redlionfish</label>
@@ -103,6 +95,13 @@ p {
 <script>
 
    document.write('hello all')
+   
+   //setup players' scores
+   var Player1Score;
+   var Player2Score;
+   Player1Score = 0;
+   Player2Score = 0;
+   
    //setup sound
    var mySound=document.getElementById("myAudio");
    
@@ -116,7 +115,6 @@ p {
    https://oceancolor.gsfc.nasa.gov/gallery/feature/images/A2020318045000.Philippines.jpg
    Then, we approximated a level based on the topography and color of the map.
    */
-   
    
    var plasticMap1=[[9,6,3,1,1,1,1,1],
       [9,6,3,1,1,1,1,1],
@@ -222,9 +220,6 @@ p {
 	ctx.stroke();
 */
 
-//Player dropdowns
-
-
 //Get location prints  a random X and Y, both 1-8.
 function getLocation() {
    var x;
@@ -241,26 +236,21 @@ function getLocation() {
   ctx.stroke();
 }
 
-
 //get player 1 stats function
 function getPlayer1() {
-mySound.play();
+	mySound.play();
 	var message="hey";
 	if(document.getElementById("redlionfish").checked==true) 
 	{
 		message="redlionfish";
 		document.getElementById("player1pic").src="./redlionfish.png";
-		player1Stats=redlionfishStats
-		
-		
-		
+		player1Stats=redlionfishStats	
 	}
 	if(document.getElementById("barracuda").checked==true) 
 	{
 		message="barracuda";
 		document.getElementById("player1pic").src="./barracuda.png";
 		player1Stats=barracudaStats;
-		
 	}
 	if(document.getElementById("yellowfintuna").checked==true) 
 	{
@@ -277,8 +267,8 @@ mySound.play();
 
 
 function getPlayer2(){
-		var message="hey";
-		mySound.play();
+	var message="hey";
+	mySound.play();
 	if(document.getElementById("redlionfish2").checked==true) 
 	{
 		message="redlionfish";
@@ -302,10 +292,31 @@ function getPlayer2(){
 	document.getElementById("sizeP2").innerHTML=player2Stats[1];
 	document.getElementById("predP2").innerHTML=player2Stats[2];
 	document.getElementById("litterP2").innerHTML=player2Stats[3];
-
-
 }
 
+//Scoring System
+/*
+Player1Score and Player2Score need to update.
+Both Players must submit their cards before score can be calculated.
+
+Scores need to factor in player's prey/predator fish, opponent's prey/predator fish, polution in the area, resistance to pollution,
+size of the fish, nutrient percent, coral percent, and the litter size of the fish.
+
+????????????
+predator/predator = cancel
+prey/prey = cancel
+predator/prey = prey losses 30%
+
+round score = 	littersize
+				- littersize((pollution-resistance)/10) //percent of pollution that decreases litter size
+				+ littersize(nutrients/10) //percent increase from nutrients
+				+ littersize(size/10) //increase from greater size
+				+ littersize(coral/size) //smaller size + more coral = more Fish
+				- littlesize(30/100) //if prey/predator situation
+				
+????????????
+
+*/
 
 
 function getMap(){
