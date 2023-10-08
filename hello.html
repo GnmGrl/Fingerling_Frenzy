@@ -6,9 +6,9 @@
 <p id="demo">Get location</p>
 <br>
 
-<audio id="myAudio">
-	<source src="mystery.mp3" type="audio/mpeg">
-	</audio>
+<audio id="BubbleSound">
+	<source src="./MP3Sounds/Bubbles.mp3" type="audio/mpeg">
+</audio>
 
 <p>Select a Map and get a location</p>
  <input type="radio" id="map1" name="mapChoice" value="map1">
@@ -107,7 +107,7 @@ p {
    Player2Score = 0;
    
    //setup sound
-   var mySound=document.getElementById("myAudio");
+   var mySound=document.getElementById("BubbleSound");
    
    
    //Here we set the map values. We have three maps. For each map, we have an 
@@ -325,8 +325,10 @@ function getPlayer2(){
 function checkforwinner(){
 	if(Player1Score >= 100){
 		document.getElementById("demo").innerHTML="Player 1 wins";
+		document.getElementById("player1pic").src="./fishpics/Player1wins.gif";
 	}else if(Player2Score >= 100){
 		document.getElementById("demo").innerHTML="Player 2 wins";
+		document.getElementById("player1pic").src="./fishpics/Player2wins.gif";
 	}
 }
 
@@ -367,9 +369,9 @@ function scoringsystem(player,fishy, oppfishy){
 	//add whether player and opponent prey/pred
 	//predator/prey = prey losses 30%
 	//if player 2, player2 is a prey, and opponent is a predator
-	//if(player == 1 && playerfishStats[2]==1 && oppfishStats[2]==0){
-	//	preypred = playerfishStats[3]*30/100.0
-	//}
+	if(player == 1 && playerfishStats[2]==1 && oppfishStats[2]==0){
+		preypred = playerfishStats[3]*30/100.0
+	}
 	
 	var roundscore=0;
 	
