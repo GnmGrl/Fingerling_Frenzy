@@ -71,6 +71,10 @@
  <p id="sizeP2">P2 size</p>
  <p id="predP2">P2 pred/prey</p>
  <p id="litterP2">P2 litter</p>
+ 
+ <br>
+ <p id="Player1score"> P1 </p>
+ <p id="Player2score"> P2 </p>
 
 <style>
 
@@ -220,6 +224,10 @@ p {
 	ctx.stroke();
 */
 
+var xlocation = 1;
+var ylocation = 1;
+var maplocation = 1;
+
 //Get location prints  a random X and Y, both 1-8.
 function getLocation() {
    var x;
@@ -230,71 +238,140 @@ function getLocation() {
    message=message+x+"  , "+y;
    document.getElementById("locationText").innerHTML=message;
    //Change this later, to highlight the right box
-   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(x,y,10, 0, 2*Math.PI);
-  ctx.stroke();
+   //ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //ctx.beginPath();
+  //ctx.arc(x,y,10, 0, 2*Math.PI);
+  //ctx.stroke();
+  xlocation = x;
+  ylocation = y;
 }
-
+var player1fishy;
 //get player 1 stats function
 function getPlayer1() {
 	mySound.play();
 	var message="hey";
+	
 	if(document.getElementById("redlionfish").checked==true) 
 	{
 		message="redlionfish";
 		document.getElementById("player1pic").src="./redlionfish.png";
-		player1Stats=redlionfishStats	
+		player1Stats=redlionfishStats
+		player1fishy = 1;
 	}
 	if(document.getElementById("barracuda").checked==true) 
 	{
 		message="barracuda";
 		document.getElementById("player1pic").src="./barracuda.png";
 		player1Stats=barracudaStats;
+		player1fishy = 2;
 	}
 	if(document.getElementById("yellowfintuna").checked==true) 
 	{
 		message="yellowfintuna";
 		document.getElementById("player1pic").src="./yellowfintuna.png";
 		player1Stats=yellowfintunaStats;
+		player1fishy = 3;
 	}
 	document.getElementById("demo").innerHTML=message;
 	document.getElementById("plasticP1").innerHTML=player1Stats[0];
 	document.getElementById("sizeP1").innerHTML=player1Stats[1];
 	document.getElementById("predP1").innerHTML=player1Stats[2];
 	document.getElementById("litterP1").innerHTML=player1Stats[3];
+	//Player1Score = Player1Score + scoringsystem(0, player1fishy);
+	document.getElementById("Player1score").innerHTML=Player1Score;
 }
 
 
 function getPlayer2(){
 	var message="hey";
 	mySound.play();
+	var player2fishy;
 	if(document.getElementById("redlionfish2").checked==true) 
 	{
-		message="redlionfish";
+		message="redlionfish";	
 		document.getElementById("player2pic").src="./redlionfish.png";
 		player2Stats=redlionfishStats;
+		player2fishy = 1;
 	}
 	if(document.getElementById("barracuda2").checked==true) 
 	{
 		message="barracuda";
 		document.getElementById("player2pic").src="./barracuda.png";
 		player2Stats=barracudaStats;
+		player2fishy = 2;
 	}
 	if(document.getElementById("yellowfintuna2").checked==true) 
 	{
 		message="yellowfintuna";
 		document.getElementById("player2pic").src="./yellowfintuna.png";
 		player2Stats=yellowfintunaStats;
+		player2fishy = 3;
 	}
 	document.getElementById("demo").innerHTML=message;
 	document.getElementById("plasticP2").innerHTML=player2Stats[0];
 	document.getElementById("sizeP2").innerHTML=player2Stats[1];
 	document.getElementById("predP2").innerHTML=player2Stats[2];
 	document.getElementById("litterP2").innerHTML=player2Stats[3];
+	
+	Player1Score = Player1Score + scoringsystem(0, player1fishy, player2fishy);
+	Player2Score = Player2Score + scoringsystem(1, player2fishy, player1fishy);
+	document.getElementById("Player2score").innerHTML=Player2Score;
 }
 
 //Scoring System
+function scoringsystem(player,fishy, oppfishy){
+
+	document.getElementById("demo").innerHTML="Hello";
+	
+	var plasticlevel=0;
+	var nutrientlevel=0;
+	var corallevel=0;
+	if(maplocation == 1){
+		plasticlevel = plasticMap1[xlocation][ylocation];
+		nutrientlevel = nutrientMap1[xlocation][ylocation];
+		corallevel = coralMap1[xlocation][ylocation];
+	}
+	document.getElementById("demo").innerHTML=corallevel;
+	
+	var playerfishStats;
+	if(fishy == 1){
+		playerfishStats = redlionfishStats;
+	}else if(fishy == 2){
+		playerfishStats = barracudaStats;
+	}else if(fishy == 3){
+		playerfishStats = yellowfintunaStats;
+	}
+	
+	var oppfishStats;
+	if(oppfishy == 1){
+		oppfishStats = redlionfishStats;
+	}else if(oppfishy == 2){
+		oppfishStats = barracudaStats;
+	}else if(oppfishy == 3){
+		oppfishStats = yellowfintunaStats;
+	}
+	
+	var preypred=0;
+	//add whether player and opponent prey/pred
+	//predator/prey = prey losses 30%
+	//if player 2, player2 is a prey, and opponent is a predator
+	if(player == 1 && playerfishStats[2]==1 && oppfishStats[2]==0){
+		preypred = playerfishStats[3]*30/100.0
+	}
+	
+	var roundscore=0;
+	
+	roundscore = playerfishStats[3]  
+					- playerfishStats[3]*((plasticlevel-playerfishStats[0])/10.0) //percent of pollution that decreases litter size
+					+ playerfishStats[3]*(nutrientlevel/10.0)//percent increase from nutrients
+					+ playerfishStats[3]*(playerfishStats[1]/10.0)//increase from greater size
+					+ playerfishStats[3]*(corallevel/playerfishStats[1])//smaller size + more coral = more Fish
+					- preypred//if prey/predator situation
+					
+	roundscore = Math.round(roundscore);
+	return roundscore;
+	
+}
 /*
 Player1Score and Player2Score need to update.
 Both Players must submit their cards before score can be calculated.
@@ -318,23 +395,25 @@ round score = 	littersize
 
 */
 
-
 function getMap(){
 	document.getElementById("demo").innerHTML="getMap function";
 	if(document.getElementById("map1").checked==true)
 	{
 		document.getElementById("scrMap").src="./Map1Gridded.png";
 		document.getElementById("demo").innerHTML="Map1";
+		maplocation = 1;
 	}
 	if(document.getElementById("map2").checked==true)
 	{
 		document.getElementById("scrMap").src="./scratch2.png";
 		document.getElementById("demo").innerHTML="Map 2";
+		maplocation = 2;
 	}
 	if(document.getElementById("map3").checked==true)
 	{
 		document.getElementById("scrMap").src="./scratch3.png";
 		document.getElementById("demo").innerHTML="Map 3";
+		maplocation = 3;
 	}
 }
 
