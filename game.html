@@ -16,7 +16,7 @@
  <input type="radio"  id="map2" name="mapChoice" value="map2">
  <label for="map2">Map 2: 2017</label><br>
  <input type="radio" id="map3" name="mapChoice" value="map3">
- <label for="map3">Map 3</label><br>
+ <label for="map3">Map 3: 2020</label><br>
   <button onclick="getMap()" id="mapbtn">Click me to enter map</button>
  <br>
   <button onclick="getLocation()">Get Map Square</button> 
@@ -170,30 +170,31 @@ p {
      [8,8,8,4,8,8,8,8],
      [8,8,4,8,8,8,8,8],
      [4,8,4,4,8,8,8,8]];
-   var plasticMap3=[[1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2],
-      [3,3,3,3,3,3,3,3],
-      [1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2],
-      [3,3,3,3,3,3,3,3],
-      [1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2]];
-   var nutrientMap3=[[1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2],
-      [3,3,3,3,3,3,3,3],
-      [1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2],
-      [3,3,3,3,3,3,3,3],
-      [1,1,1,1,1,1,1,1],
-      [2,2,2,2,2,2,2,2]];
-   var coralMap3=[[1,1,1,1,1,1,1,1],
-     [2,2,2,2,2,2,2,2],
-     [3,3,3,3,3,3,3,3],
-     [1,1,1,1,1,1,1,1],
-     [2,2,2,2,2,2,2,2],
-     [3,3,3,3,3,3,3,3],
-     [1,1,1,1,1,1,1,1],
-     [2,2,2,2,2,2,2,2]];
+	//Map 3 2020
+   var plasticMap3=[[6,6,6,4,4,3,3,3],
+      [6,9,7,6,4,3,3,3],
+      [6,9,9,7,6,4,3,3],
+      [7,9,9,9,7,4,4,4],
+      [7,9,9,9,9,7,6,4],
+      [6,7,9,9,9,7,3,6],
+      [7,6,6,9,9,9,7,3],
+      [7,6,6,7,9,9,9,7]];
+   var nutrientMap3=[[3,5,3,3,3,1,1,1],
+      [7,5,3,3,7,3,1,1],
+      [5,3,3,7,3,1,1,1],
+      [3,3,7,7,5,3,1,1],
+      [3,7,7,7,5,5,3,1],
+      [5,5,7,7,7,7,5,3],
+      [7,5,5,7,7,7,5,5],
+      [7,5,5,7,7,7,7,5]];
+   var coralMap3=[[4,8,8,4,4,4,4,1],
+     [8,1,1,8,4,4,4,4],
+     [8,1,1,8,4,4,4,4],
+     [8,8,8,8,8,4,4,4],
+     [8,8,8,8,8,4,4,4],
+     [4,8,8,8,8,8,4,4],
+     [4,4,8,8,8,8,8,4],
+     [4,4,4,8,8,8,8,8]];
    
    document.getElementById("demo").innerHTML=plasticMap1[0][0];
    
@@ -427,7 +428,7 @@ function getMap(){
 	}
 	if(document.getElementById("map3").checked==true)
 	{
-		document.getElementById("scrMap").src="./scratch3.png";
+		document.getElementById("scrMap").src="./Map2020.png";
 		document.getElementById("demo").innerHTML="Map 3";
 		maplocation = 3;
 	}
